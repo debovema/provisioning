@@ -8,7 +8,8 @@ module "provider" {
   region          = "${var.scaleway_region}"
 }
 
-/*module "provider" {
+/*
+module "provider" {
   source = "./provider/digitalocean"
 
   token           = "${var.digitalocean_token}"
@@ -16,7 +17,18 @@ module "provider" {
   hosts           = "${var.hosts}"
   hostname_format = "${var.hostname_format}"
   region          = "${var.digitalocean_region}"
-}*/
+}
+*/
+
+module "dns" {
+  source = "./dns/gandi"
+
+  count      = "${var.hosts}"
+  domain     = "${var.domain}"
+  api_key    = "${var.gandi_api_key}"
+  public_ips = "${module.provider.public_ips}"
+  hostnames  = "${module.provider.hostnames}"
+}
 
 /*
 module "dns" {
@@ -32,6 +44,7 @@ module "dns" {
 }
 */
 
+/*
 module "dns" {
   source = "./dns/cloudflare"
 
@@ -42,6 +55,7 @@ module "dns" {
   public_ips = "${module.provider.public_ips}"
   hostnames  = "${module.provider.hostnames}"
 }
+*/
 
 /*
 module "dns" {
@@ -57,13 +71,14 @@ module "dns" {
   hostnames    = "${module.provider.hostnames}"
 }
 */
-
+/*
 module "swap" {
   source = "./service/swap"
 
   count       = "${var.hosts}"
   connections = "${module.provider.public_ips}"
 }
+*/
 
 module "wireguard" {
   source = "./security/wireguard"
@@ -74,6 +89,7 @@ module "wireguard" {
   hostnames   = "${module.provider.hostnames}"
 }
 
+/*
 module "firewall" {
   source = "./security/ufw"
 
@@ -84,6 +100,7 @@ module "firewall" {
   vpn_port             = "${module.wireguard.vpn_port}"
   kubernetes_interface = "${module.kubernetes.overlay_interface}"
 }
+*/
 
 module "etcd" {
   source = "./service/etcd"

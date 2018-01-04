@@ -24,6 +24,11 @@ variable "scaleway_region" {
   default = "ams1"
 }
 
+/* Gandi DNS */
+variable "gandi_api_key" {
+  default = ""
+}
+
 /* digitalocean */
 variable "digitalocean_token" {
   default = ""
