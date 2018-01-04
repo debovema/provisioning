@@ -6,4 +6,4 @@ until $(nc -z ${master_ip} 6443); do
   sleep 5
 done
 
-kubeadm join --token=${token} ${master_ip}:6443
+kubeadm join --discovery-token-unsafe-skip-ca-verification --token=${token} ${master_ip}:6443
