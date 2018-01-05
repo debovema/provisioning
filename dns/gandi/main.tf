@@ -22,7 +22,7 @@ resource "gandi_zone" "zone" {
 
 resource "gandi_zonerecord" "kubernetes_wildcard" {
   zone = "${gandi_zone.zone.id}"
-  name = "*.kub2"
+  name = "*.kub"
   type = "A"
   ttl = 600
   values = [

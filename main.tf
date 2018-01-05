@@ -121,3 +121,10 @@ module "kubernetes" {
   vpn_ips        = "${module.wireguard.vpn_ips}"
   etcd_endpoints = "${module.etcd.endpoints}"
 }
+
+module "loadbalancer" {
+  source = "./service/loadbalancer/traefik"
+
+  domain      = "${var.domain}"
+  connections = "${module.provider.public_ips}"
+}
