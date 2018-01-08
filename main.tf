@@ -112,8 +112,9 @@ module "misc" {
 module "loadbalancer" {
   source = "./service/loadbalancer/traefik"
 
+  dependency  = "${module.kubernetes.overlay_interface}"
   domain      = "${var.domain}"
   connections = "${module.provider.public_ips}"
   le_mail     = "${var.le_mail}"
-  dependency  = "${module.kubernetes.overlay_interface}"
+  le_staging  = "${var.le_staging}"
 }

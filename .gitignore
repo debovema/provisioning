@@ -3,4 +3,4 @@ terraform.tfstate*
 .terraform.tfstate*
 terraform.tfvars
 
-service/loadbalancer/traefik/*.json
+service/loadbalancer/traefik/acme.json

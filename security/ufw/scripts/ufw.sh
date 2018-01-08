@@ -12,5 +12,5 @@ ufw allow 443
 ufw default deny incoming
 ufw --force enable
 ufw status verbose
-ufw disable
-ufw status verbose
+#ufw disable
+#ufw status verbose

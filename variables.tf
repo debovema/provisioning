@@ -85,3 +85,7 @@ variable "google_credentials_file" {
 variable "le_mail" {
   default = ""
 }
+
+variable "le_staging" {
+  default = false
+}
