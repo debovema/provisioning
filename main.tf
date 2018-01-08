@@ -94,16 +94,6 @@ module "firewall" {
 }
 */
 
-module "etcd" {
-  source = "./service/etcd"
-
-  count       = "${var.hosts}"
-  connections = "${module.provider.public_ips}"
-  hostnames   = "${module.provider.hostnames}"
-  vpn_unit    = "${module.wireguard.vpn_unit}"
-  vpn_ips     = "${module.wireguard.vpn_ips}"
-}
-
 module "kubernetes" {
   source = "./service/kubernetes"
 
@@ -111,7 +101,6 @@ module "kubernetes" {
   connections    = "${module.provider.public_ips}"
   cluster_name   = "${var.domain}"
   vpn_ips        = "${module.wireguard.vpn_ips}"
-  etcd_endpoints = "${module.etcd.endpoints}"
 }
 
 module "loadbalancer" {

@@ -8,10 +8,6 @@ variable "vpn_ips" {
   type = "list"
 }
 
-variable "etcd_endpoints" {
-  type = "list"
-}
-
 resource "null_resource" "kubernetes" {
   count = "${var.count}"
 
@@ -58,7 +54,6 @@ data "template_file" "master-configuration" {
 
   vars {
     api_advertise_addresses = "${element(var.vpn_ips, 0)}"
-    etcd_endpoints          = "- ${join("\n  - ", var.etcd_endpoints)}"
     cert_sans               = "- ${element(var.connections, 0)}"
   }
 }
@@ -85,5 +80,5 @@ data "external" "cluster_token" {
 }
 
 output "overlay_interface" {
-  value = "weave"
+  value = "calico"
 }

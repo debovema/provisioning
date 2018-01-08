@@ -2,8 +2,7 @@ apiVersion: kubeadm.k8s.io/v1alpha1
 kind: MasterConfiguration
 api:
   advertiseAddress: ${api_advertise_addresses}
-etcd:
-  endpoints:
-  ${etcd_endpoints}
+networking:
+  podSubnet: "10.0.1.0/24"
 apiServerCertSANs:
   ${cert_sans}
