@@ -81,7 +81,6 @@ module "wireguard" {
   hostnames   = "${module.provider.hostnames}"
 }
 
-/*
 module "firewall" {
   source = "./security/ufw"
 
@@ -92,7 +91,6 @@ module "firewall" {
   vpn_port             = "${module.wireguard.vpn_port}"
   kubernetes_interface = "${module.kubernetes.overlay_interface}"
 }
-*/
 
 module "kubernetes" {
   source = "./service/kubernetes"
@@ -103,9 +101,19 @@ module "kubernetes" {
   vpn_ips        = "${module.wireguard.vpn_ips}"
 }
 
+module "misc" {
+  source = "./service/misc"
+
+  count       = "${var.hosts}"
+  connections = "${module.provider.public_ips}"
+  dependency  = "${module.kubernetes.overlay_interface}"
+}
+
 module "loadbalancer" {
   source = "./service/loadbalancer/traefik"
 
   domain      = "${var.domain}"
   connections = "${module.provider.public_ips}"
+  le_mail     = "${var.le_mail}"
+  dependency  = "${module.kubernetes.overlay_interface}"
 }

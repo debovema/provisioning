@@ -80,3 +80,8 @@ variable "google_managed_zone" {
 variable "google_credentials_file" {
   default = ""
 }
+
+/* Let's Encrypt */
+variable "le_mail" {
+  default = ""
+}

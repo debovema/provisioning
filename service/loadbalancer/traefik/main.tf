@@ -1,4 +1,6 @@
 variable "domain" {}
+variable "dependency" {}
+variable "le_mail" {}
 
 variable "connections" {
   type = "list"
@@ -29,5 +31,6 @@ data "template_file" "traefik" {
   vars {
     external_ip = "${element(var.connections, 0)}"
     domain_name = "${var.domain}"
+    le_mail     = "${var.le_mail}"
   }
 }
