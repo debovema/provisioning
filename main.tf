@@ -79,6 +79,7 @@ module "wireguard" {
   connections = "${module.provider.public_ips}"
   private_ips = "${module.provider.private_ips}"
   hostnames   = "${module.provider.hostnames}"
+  pod_subnet  = "${var.kubernetes_pod_subnet}"
 }
 
 module "firewall" {
@@ -92,6 +93,16 @@ module "firewall" {
   kubernetes_interface = "${module.kubernetes.overlay_interface}"
 }
 
+module "etcd" {
+  source = "./service/etcd"
+
+  count       = "${var.hosts}"
+  connections = "${module.provider.public_ips}"
+  hostnames   = "${module.provider.hostnames}"
+  vpn_unit    = "${module.wireguard.vpn_unit}"
+  vpn_ips     = "${module.wireguard.vpn_ips}"
+}
+
 module "kubernetes" {
   source = "./service/kubernetes"
 
@@ -99,6 +110,9 @@ module "kubernetes" {
   connections    = "${module.provider.public_ips}"
   cluster_name   = "${var.domain}"
   vpn_ips        = "${module.wireguard.vpn_ips}"
+  etcd_endpoints = "${module.etcd.endpoints}"
+  pod_subnet     = "${var.kubernetes_pod_subnet}"
+  service_subnet = "${var.kubernetes_service_subnet}"
 }
 
 module "misc" {
@@ -107,6 +121,12 @@ module "misc" {
   count       = "${var.hosts}"
   connections = "${module.provider.public_ips}"
   dependency  = "${module.kubernetes.overlay_interface}"
+}
+
+module "dashboard" {
+  source = "./service/kubernetes/dashboard"
+
+  connections = "${module.provider.public_ips}"
 }
 
 module "loadbalancer" {

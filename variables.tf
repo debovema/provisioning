@@ -81,6 +81,15 @@ variable "google_credentials_file" {
   default = ""
 }
 
+/* Kubernetes */
+variable "kubernetes_pod_subnet" {
+  default = "192.168.0.0/16"
+}
+
+variable "kubernetes_service_subnet" {
+  default = "10.96.0.0/12"
+}
+
 /* Let's Encrypt */
 variable "le_mail" {
   default = ""

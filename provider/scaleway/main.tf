@@ -52,7 +52,7 @@ resource "scaleway_server" "host" {
   provisioner "remote-exec" {
     inline = [
       "apt-get update",
-      "apt-get install -yq apt-transport-https ufw nfs-common git zsh",
+      "apt-get install -yq apt-transport-https ufw nfs-common git zsh telnet",
     ]
   }
 }
@@ -64,7 +64,7 @@ data "scaleway_image" "image" {
 
 data "scaleway_bootscript" "bootscript" {
   architecture = "x86_64"
-  name_filter  = ".*4.14.12.*"
+  name_filter  = ".*4.14.*"
 }
 
 output "hostnames" {

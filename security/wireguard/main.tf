@@ -24,6 +24,8 @@ variable "vpn_iprange" {
   default = "10.0.1.0/24"
 }
 
+variable "pod_subnet" {}
+
 resource "null_resource" "wireguard" {
   count = "${var.count}"
 
@@ -96,6 +98,7 @@ data "template_file" "peer-conf" {
     port        = "${var.vpn_port}"
     public_key  = "${element(data.external.keys.*.result.public_key, count.index)}"
     allowed_ips = "${element(data.template_file.vpn_ips.*.rendered, count.index)}/32"
+    pod_subnet  = "${var.pod_subnet}"
   }
 }
 

@@ -2,6 +2,12 @@ variable "domain" {}
 variable "dependency" {}
 variable "le_mail" {}
 variable "le_staging" {}
+variable "le_prod_server" {
+  default = ""
+}
+variable "le_staging_server" {
+  default = "https://acme-staging.api.letsencrypt.org/directory"
+}
 
 variable "connections" {
   type = "list"
@@ -44,7 +50,8 @@ data "template_file" "traefik" {
   vars {
     external_ip = "${element(var.connections, 0)}"
     domain_name = "${var.domain}"
+    dependency  = "${var.dependency}"
     le_mail     = "${var.le_mail}"
-    le_server   = "${var.le_staging ? \"https://acme-staging.api.letsencrypt.org/directory\" : \"\"}"
+    le_server   = "${var.le_staging ? var.le_staging_server : var.le_prod_server}"
   }
 }

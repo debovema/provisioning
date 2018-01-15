@@ -8,6 +8,13 @@ variable "vpn_ips" {
   type = "list"
 }
 
+variable "etcd_endpoints" {
+  type = "list"
+}
+
+variable "pod_subnet" {}
+variable "service_subnet" {}
+
 resource "null_resource" "kubernetes" {
   count = "${var.count}"
 
@@ -47,6 +54,7 @@ resource "null_resource" "kubernetes" {
 ${count.index == 0 ? data.template_file.master.rendered : data.template_file.slave.rendered}
 EOF
   }
+
 }
 
 data "template_file" "master-configuration" {
@@ -54,6 +62,9 @@ data "template_file" "master-configuration" {
 
   vars {
     api_advertise_addresses = "${element(var.vpn_ips, 0)}"
+    etcd_endpoints          = "- ${join("\n  - ", var.etcd_endpoints)}"
+    pod_subnet              = "${var.pod_subnet}"
+    service_subnet          = "${var.service_subnet}"
     cert_sans               = "- ${element(var.connections, 0)}"
   }
 }
@@ -62,7 +73,9 @@ data "template_file" "master" {
   template = "${file("${path.module}/scripts/master.sh")}"
 
   vars {
-    token = "${data.external.cluster_token.result.token}"
+    token          = "${data.external.cluster_token.result.token}"
+    etcd_endpoints = "${join(",", var.etcd_endpoints)}"
+    pod_subnet     = "${var.pod_subnet}"
   }
 }
 
