@@ -50,7 +50,7 @@ until [ $(kubectl get nodes -o jsonpath='{range .items[*]}{@.metadata.name}:{ran
 done
 echo "Nodes are Ready!"
 
-ETCDCTL_API=3 /opt/etcd/etcdctl --endpoints ${etcd_endpoints} get --from-key --keys-only "" | grep /calico/ipam/v2/host > /tmp/calico-ipam
+kubectl apply -f /tmp/wireguard-controller.yml
 
 # See: https://kubernetes.io/docs/admin/authorization/rbac/
 kubectl create clusterrolebinding permissive-binding \
