@@ -45,6 +45,16 @@ resource "null_resource" "kubernetes" {
     destination = "/tmp/master-configuration.yml"
   }
 
+  provisioner "file" {
+    source      = "${path.module}/templates/wireguard-controller.yml"
+    destination = "/tmp/wireguard-controller.yml"
+  }
+
+  provisioner "file" {
+    source      = "${path.module}/templates/wireguard-watcher.sh"
+    destination = "/tmp/wireguard-watcher.sh"
+  }
+
   provisioner "remote-exec" {
     script = "${path.module}/scripts/install.sh"
   }
