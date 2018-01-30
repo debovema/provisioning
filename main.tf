@@ -135,6 +135,8 @@ module "loadbalancer" {
   dependency  = "${module.kubernetes.overlay_interface}"
   domain      = "${var.domain}"
   connections = "${module.provider.public_ips}"
+  lb_user     = "${var.lb_user}"
+  lb_password = "${var.lb_password}"
   le_mail     = "${var.le_mail}"
   le_staging  = "${var.le_staging}"
 }

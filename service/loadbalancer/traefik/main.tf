@@ -1,5 +1,7 @@
 variable "domain" {}
 variable "dependency" {}
+variable "lb_user" {}
+variable "lb_password" {}
 variable "le_mail" {}
 variable "le_staging" {}
 variable "le_prod_server" {
@@ -38,8 +40,9 @@ resource "null_resource" "traefik" {
 
   provisioner "remote-exec" {
     inline = [
-      "echo ${var.dependency}",
-      "kubectl apply -f /tmp/traefik.yaml" 
+      "htpasswd -bc /tmp/traefik-basic-auth ${var.lb_user} ${var.lb_password}",
+      "kubectl create secret generic traefik-dashboard-auth -n traefik --from-file=/tmp/traefik-basic-auth",
+      "kubectl apply -f /tmp/traefik.yaml"
     ]
   }
 }

@@ -176,10 +176,10 @@ metadata:
  namespace: traefik
  annotations:
    kubernetes.io/ingress.class: traefik
-   traefik.frontend.entryPoints: "http"
-#  ingress.kubernetes.io/auth-type: basic
-#  ingress.kubernetes.io/auth-secret: traefik-dashboard-auth
-#  ingress.kubernetes.io/auth-realm: "traefik"
+   traefik.frontend.entryPoints: "https"
+   ingress.kubernetes.io/auth-type: basic
+   ingress.kubernetes.io/auth-secret: traefik-dashboard-auth
+   ingress.kubernetes.io/auth-realm: "traefik"
 spec:  
  rules:
  - host: "traefik.kub.${domain_name}"

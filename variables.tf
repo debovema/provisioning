@@ -92,9 +92,16 @@ variable "kubernetes_service_subnet" {
 
 /* Let's Encrypt */
 variable "le_mail" {
-  default = ""
 }
 
 variable "le_staging" {
   default = false
+}
+
+/* Traefik (Load Balancer) */
+variable "lb_user" {
+  default = "admin"
+}
+
+variable "lb_password" {
 }
