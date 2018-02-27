@@ -12,7 +12,7 @@ variable "hostname_format" {
 }
 
 variable "apt_packages" {
-  default = "nfs-common ceph-common git zsh"
+  default = "nfs-common ceph-common git zsh telnet apache2-utils"
 }
 
 /* scaleway */
@@ -92,4 +92,20 @@ variable "zsh_plugins" {
 
 variable "zsh_theme" {
   default = "ys"
+}
+
+/* Let's Encrypt */
+variable "le_mail" {
+}
+
+variable "le_staging" {
+  default = false
+}
+
+/* Traefik (Load Balancer) */
+variable "lb_user" {
+  default = "admin"
+}
+
+variable "lb_password" {
 }

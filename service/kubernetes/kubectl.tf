@@ -50,3 +50,8 @@ EOT
     command = "rm -rf $HOME/.kube/${var.cluster_name}"
   }
 }
+
+output "kubernetes_installed" {
+  value = "${null_resource.kubectl.id}"
+}
+

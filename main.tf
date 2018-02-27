@@ -130,3 +130,15 @@ module "zsh" {
   plugins     = "${var.zsh_plugins}"
   theme       = "${var.zsh_theme}"
 }
+
+module "loadbalancer" {
+  source = "./service/loadbalancer/traefik"
+
+  dependency  = "${module.kubernetes.kubernetes_installed}"
+  domain      = "${var.domain}"
+  connections = "${module.provider.public_ips}"
+  lb_user     = "${var.lb_user}"
+  lb_password = "${var.lb_password}"
+  le_mail     = "${var.le_mail}"
+  le_staging  = "${var.le_staging}"
+}
