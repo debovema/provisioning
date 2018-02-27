@@ -109,3 +109,12 @@ variable "lb_user" {
 
 variable "lb_password" {
 }
+
+/* Kubernetes dashboard */
+variable "k8s_dashboard_user" {
+  default = "admin"
+}
+
+variable "k8s_dashboard_password" {
+}
+

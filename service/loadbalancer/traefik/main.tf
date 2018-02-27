@@ -60,3 +60,8 @@ data "template_file" "traefik" {
     le_server   = "${var.le_staging ? var.le_staging_server : var.le_prod_server}"
   }
 }
+
+output "traefik_installed" {
+  value = "${null_resource.traefik.id}"
+}
+

@@ -142,3 +142,12 @@ module "loadbalancer" {
   le_mail     = "${var.le_mail}"
   le_staging  = "${var.le_staging}"
 }
+
+module "dashboard" {
+  source = "./service/kubernetes/dashboard"
+
+  dummy_dependency       = "${module.loadbalancer.traefik_installed}"
+  connections            = "${module.provider.public_ips}"
+  k8s_dashboard_user     = "${var.k8s_dashboard_user}"
+  k8s_dashboard_password = "${var.k8s_dashboard_password}"
+}
