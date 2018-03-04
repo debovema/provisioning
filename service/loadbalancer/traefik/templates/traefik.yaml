@@ -54,12 +54,12 @@ metadata:
  namespace: traefik
 data:
  traefik.toml: |-
-   defaultEntryPoints = ["http"]
+   defaultEntryPoints = ["http","https"]
    [entryPoints]
      [entryPoints.http]
      address = ":80"
-       #[entryPoints.http.redirect]
-       #  entryPoint = "https"
+       [entryPoints.http.redirect]
+         entryPoint = "https"
      [entryPoints.https]
      address = ":443"
        [entryPoints.https.tls]
@@ -68,7 +68,7 @@ data:
    [acme]
    storage = "/acme.json"
    email = "${le_mail}"
-   onDemand = true
+   onHostRule = true
    caServer = "${le_server}"
    entryPoint = "https"
      [acme.httpChallenge]

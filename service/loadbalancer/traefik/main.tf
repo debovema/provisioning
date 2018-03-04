@@ -8,7 +8,7 @@ variable "le_prod_server" {
   default = ""
 }
 variable "le_staging_server" {
-  default = "https://acme-staging.api.letsencrypt.org/directory"
+  default = "https://acme-staging-v02.api.letsencrypt.org/directory"
 }
 
 variable "connections" {
