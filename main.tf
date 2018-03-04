@@ -151,3 +151,12 @@ module "dashboard" {
   k8s_dashboard_user     = "${var.k8s_dashboard_user}"
   k8s_dashboard_password = "${var.k8s_dashboard_password}"
 }
+
+module "storage" {
+  source = "./storage/rook"
+
+  count       = "${var.hosts}"
+  connections = "${module.provider.public_ips}"
+  dependency  = "${module.kubernetes.kubernetes_installed}"
+}
+
